@@ -512,99 +512,105 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Get all screens and buttons
-            const nameScreen = document.getElementById('name-screen');
-            const introScreen = document.getElementById('intro-screen');
-            const directorSkillsScreen = document.getElementById('director-skills-screen');
-            const directorDifficultiesScreen = document.getElementById('director-difficulties-screen');
-            const teacherSkillsScreen = document.getElementById('teacher-skills-screen');
-            const teacherDifficultiesScreen = document.getElementById('teacher-difficulties-screen');
-            const thankYouScreen = document.getElementById('thank-you-screen');
-            
-            const btnNextName = document.getElementById('btn-next-name');
-            const btnDirector = document.getElementById('btn-director');
-            const btnTeacher = document.getElementById('btn-teacher');
+            const screens = {
+                name: document.getElementById('name-screen'),
+                intro: document.getElementById('intro-screen'),
+                directorSkills: document.getElementById('director-skills-screen'),
+                directorDifficulties: document.getElementById('director-difficulties-screen'),
+                teacherSkills: document.getElementById('teacher-skills-screen'),
+                teacherDifficulties: document.getElementById('teacher-difficulties-screen'),
+                thankYou: document.getElementById('thank-you-screen'),
+            };
 
-            const btnBackDirectorSkills = document.getElementById('btn-back-director-skills');
-            const btnNextDirectorSkills = document.getElementById('btn-next-director-skills');
-            const btnBackDirectorDifficulties = document.getElementById('btn-back-director-difficulties');
-            const btnSendDirector = document.getElementById('btn-send-director');
+            const buttons = {
+                nextName: document.getElementById('btn-next-name'),
+                director: document.getElementById('btn-director'),
+                teacher: document.getElementById('btn-teacher'),
+                backDirectorSkills: document.getElementById('btn-back-director-skills'),
+                nextDirectorSkills: document.getElementById('btn-next-director-skills'),
+                backDirectorDifficulties: document.getElementById('btn-back-director-difficulties'),
+                sendDirector: document.getElementById('btn-send-director'),
+                backTeacherSkills: document.getElementById('btn-back-teacher-skills'),
+                nextTeacherSkills: document.getElementById('btn-next-teacher-skills'),
+                backTeacherDifficulties: document.getElementById('btn-back-teacher-difficulties'),
+                sendTeacher: document.getElementById('btn-send-teacher'),
+                backHome: document.getElementById('btn-back-home'),
+            };
 
-            const btnBackTeacherSkills = document.getElementById('btn-back-teacher-skills');
-            const btnNextTeacherSkills = document.getElementById('btn-next-teacher-skills');
-            const btnBackTeacherDifficulties = document.getElementById('btn-back-teacher-difficulties');
-            const btnSendTeacher = document.getElementById('btn-send-teacher');
-            const btnBackHome = document.getElementById('btn-back-home');
+            let formData = {};
 
-            // Function to handle screen transitions
-            function showScreen(screen) {
-                const screens = document.querySelectorAll('.screen');
-                // Remove both 'active' and 'exiting' classes from all screens to prevent conflicts
-                screens.forEach(s => {
-                    s.classList.remove('active');
-                    s.classList.remove('exiting');
-                });
-                // Add the 'active' class to the target screen
-                screen.classList.add('active');
+            function resetForm() {
+                formData = {};
+                document.getElementById('name-input').value = '';
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = false);
             }
 
-            // Navigation event listeners
-            btnNextName.addEventListener('click', () => {
-                nameScreen.classList.add('exiting');
+            function collectCheckboxData(name) {
+                return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+            }
+
+            function transitionTo(fromScreen, toScreen) {
+                fromScreen.classList.add('exiting');
                 setTimeout(() => {
-                    showScreen(introScreen);
-                }, 800);
+                    fromScreen.classList.remove('active', 'exiting');
+                    toScreen.classList.add('active');
+                }, 500);
+            }
+
+            buttons.nextName.addEventListener('click', () => {
+                const nameInput = document.getElementById('name-input');
+                if (nameInput.value.trim() === '') {
+                    alert('Por favor, insira seu nome.');
+                    return;
+                }
+                formData.name = nameInput.value.trim();
+                transitionTo(screens.name, screens.intro);
             });
 
-            btnDirector.addEventListener('click', () => {
-                introScreen.classList.add('exiting');
-                setTimeout(() => {
-                    showScreen(directorSkillsScreen);
-                }, 800);
+            buttons.director.addEventListener('click', () => {
+                formData.role = 'Diretor(a)';
+                transitionTo(screens.intro, screens.directorSkills);
             });
 
-            btnTeacher.addEventListener('click', () => {
-                introScreen.classList.add('exiting');
-                setTimeout(() => {
-                    showScreen(teacherSkillsScreen);
-                }, 800);
-            });
-
-            btnBackDirectorSkills.addEventListener('click', () => {
-                showScreen(introScreen);
+            buttons.teacher.addEventListener('click', () => {
+                formData.role = 'Professor(a)';
+                transitionTo(screens.intro, screens.teacherSkills);
             });
             
-            btnNextDirectorSkills.addEventListener('click', () => {
-                showScreen(directorDifficultiesScreen);
+            buttons.backDirectorSkills.addEventListener('click', () => transitionTo(screens.directorSkills, screens.intro));
+
+            buttons.nextDirectorSkills.addEventListener('click', () => {
+                formData.skills = collectCheckboxData('director-skills');
+                transitionTo(screens.directorSkills, screens.directorDifficulties);
             });
 
-            btnBackDirectorDifficulties.addEventListener('click', () => {
-                showScreen(directorSkillsScreen);
+            buttons.backDirectorDifficulties.addEventListener('click', () => transitionTo(screens.directorDifficulties, screens.directorSkills));
+
+            buttons.sendDirector.addEventListener('click', () => {
+                formData.difficulties = collectCheckboxData('director-difficulties');
+                console.log('Form Data (Director):', formData); // Simulate sending data
+                transitionTo(screens.directorDifficulties, screens.thankYou);
             });
 
-            btnBackTeacherSkills.addEventListener('click', () => {
-                showScreen(introScreen);
-            });
-            
-            btnNextTeacherSkills.addEventListener('click', () => {
-                showScreen(teacherDifficultiesScreen);
+            buttons.backTeacherSkills.addEventListener('click', () => transitionTo(screens.teacherSkills, screens.intro));
+
+            buttons.nextTeacherSkills.addEventListener('click', () => {
+                formData.skills = collectCheckboxData('teacher-skills');
+                transitionTo(screens.teacherSkills, screens.teacherDifficulties);
             });
 
-            btnBackTeacherDifficulties.addEventListener('click', () => {
-                showScreen(teacherSkillsScreen);
+            buttons.backTeacherDifficulties.addEventListener('click', () => transitionTo(screens.teacherDifficulties, screens.teacherSkills));
+
+            buttons.sendTeacher.addEventListener('click', () => {
+                formData.difficulties = collectCheckboxData('teacher-difficulties');
+                console.log('Form Data (Teacher):', formData); // Simulate sending data
+                transitionTo(screens.teacherDifficulties, screens.thankYou);
             });
 
-            // "Finalizar" button listeners
-            btnSendDirector.addEventListener('click', () => {
-                showScreen(thankYouScreen);
-            });
-            btnSendTeacher.addEventListener('click', () => {
-                showScreen(thankYouScreen);
-            });
-            
-            // "Voltar para o Início" button listener
-            btnBackHome.addEventListener('click', () => {
-                showScreen(nameScreen);
+            buttons.backHome.addEventListener('click', () => {
+                resetForm();
+                transitionTo(screens.thankYou, screens.name);
             });
         });
     </script>
