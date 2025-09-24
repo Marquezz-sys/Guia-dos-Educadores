@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Aprendizagem - Educadores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a0572;
+            --secondary-color: #4b1a8c;
+            --accent-color: #f7b731;
+            --background-gradient: radial-gradient(circle at top left, #4b1a8c, #6a0572, #f7b731);
+            --text-light: #f4f4f4;
+            --text-dark: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            display: grid;
+            place-items: center;
+            background: var(--background-gradient);
+            overflow: hidden;
+            animation: backgroundShift 15s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0;
+            box-shadow: none;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* --- Screens --- */
+        .screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .screen.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .screen.exiting {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        /* Specific screen styles */
+        #name-screen h1,
+        #intro-screen h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: fadeIn 1s forwards;
+            font-weight: 700;
+        }
+        
+        #name-screen input {
+            padding: 10px 15px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        #name-screen input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-next-name {
+            margin-top: 20px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+        
+        .btn-next-name:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #thank-you-screen h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            animation: fadeIn 1s forwards;
+        }
+
+        .role-buttons {
+            display: flex;
+            gap: 20px;
+            animation: fadeIn 1.4s forwards;
+            animation-delay: 0.4s;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #btn-director {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+        }
+
+        #btn-teacher {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+        }
+
+        /* --- Topic Screens --- */
+        .topic-header {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            animation: slideInFromTop 0.8s forwards;
+        }
+        
+        .topic-header-sub {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            animation: slideInFromTop 0.8s forwards;
+            animation-delay: 0.2s;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .topic-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Checkbox styling */
+        .topic-card input[type="checkbox"] {
+            display: none;
+        }
+
+        .topic-card input[type="checkbox"]:checked + div {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(106, 5, 114, 0.5);
+            transform: scale(1.03);
+        }
+
+        .screen.active .topic-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .screen.active .topic-card:nth-child(1) { transition-delay: 0.2s; }
+        .screen.active .topic-card:nth-child(2) { transition-delay: 0.4s; }
+        .screen.active .topic-card:nth-child(3) { transition-delay: 0.6s; }
+        .screen.active .topic-card:nth-child(4) { transition-delay: 0.8s; }
+        .screen.active .topic-card:nth-child(5) { transition-delay: 1.0s; }
+
+        .topic-card h3 {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .topic-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .btn-navigation {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px;
+            animation: fadeIn 1.2s forwards;
+            animation-delay: 1s;
+        }
+
+        .btn-navigation button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .btn-navigation button:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-back {
+            background-color: #ccc;
+            color: #666;
+        }
+        
+        .btn-next {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-send {
+            background-color: #28a745;
+            color: var(--text-light);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInFromTop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- Tela de Nome -->
+        <div id="name-screen" class="screen active">
+            <h1>Coloque seu nome completo</h1>
+            <input type="text" id="name-input" placeholder="Seu nome aqui...">
+            <button id="btn-next-name" class="btn btn-next-name">Próximo</button>
+        </div>
+
+        <!-- Tela de Abertura -->
+        <div id="intro-screen" class="screen">
+            <h1>QUAL É SEU USUARIO?</h1>
+            <div class="role-buttons">
+                <button id="btn-director" class="btn">Sou Diretor(a)</button>
+                <button id="btn-teacher" class="btn">Sou Professor(a)</button>
+            </div>
+        </div>
+
+        <!-- Telas do Diretor -->
+        <div id="director-skills-screen" class="screen">
+            <h2 class="topic-header">Habilidades Essenciais do Diretor</h2>
+            <h3 class="topic-header-sub">Selecione o que você faz bem:</h3>
+            <div class="topic-grid">
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Liderança Transformadora">
+                    <div>
+                        <h3>Liderança Transformadora</h3>
+                        <p>Você é capaz de inspirar a equipe, motivando-a a abraçar a inovação e o crescimento contínuo.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Visão Estratégica">
+                    <div>
+                        <h3>Visão Estratégica</h3>
+                        <p>Você planeja a longo prazo, definindo objetivos claros para a escola e sua comunidade.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Gestão de Pessoas">
+                    <div>
+                        <h3>Gestão de Pessoas</h3>
+                        <p>Você promove um ambiente de colaboração, valorizando o desenvolvimento profissional de cada um.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Comunicação Eficaz">
+                    <div>
+                        <h3>Comunicação Eficaz</h3>
+                        <p>Você estabelece diálogos transparentes e construtivos com professores, pais e alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Foco na Qualidade">
+                    <div>
+                        <h3>Foco na Qualidade</h3>
+                        <p>Você utiliza dados e métricas para garantir que o ensino atenda aos mais altos padrões de qualidade.</p>
+                    </div>
+                </label>
+            </div>
+            <div class="btn-navigation">
+                <button id="btn-back-director-skills" class="btn btn-back">Voltar</button>
+                <button id="btn-next-director-skills" class="btn btn-next">Próximo</button>
+            </div>
+        </div>
+
+        <div id="director-difficulties-screen" class="screen">
+            <h2 class="topic-header">Maiores Dificuldades do Diretor</h2>
+            <h3 class="topic-header-sub">Selecione onde você encontra desafios:</h3>
+            <div class="topic-grid">
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Conflitos na Equipe">
+                    <div>
+                        <h3>Conflitos na Equipe</h3>
+                        <p>Gerenciar diferentes personalidades e visões para manter a harmonia e o foco nos objetivos pedagógicos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Falta de Recursos">
+                    <div>
+                        <h3>Falta de Recursos</h3>
+                        <p>Lidar com orçamentos limitados e buscar soluções criativas para aprimorar a infraestrutura da escola.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Burocracia Excessiva">
+                    <div>
+                        <h3>Burocracia Excessiva</h3>
+                        <p>Navegar por processos administrativos complexos que consomem tempo e energia que poderiam ser usados para o ensino.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Envolvimento dos Pais">
+                    <div>
+                        <h3>Envolvimento dos Pais</h3>
+                        <p>Engajar as famílias no processo educacional dos alunos, superando a falta de tempo e interesse.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Pressão por Resultados">
+                    <div>
+                        <h3>Pressão por Resultados</h3>
+                        <p>Equilibrar a pressão por altas notas e desempenho com um ambiente de aprendizado saudável e acolhedor.</p>
+                    </div>
+                </label>
+            </div>
+            <div class="btn-navigation">
+                <button id="btn-back-director-difficulties" class="btn btn-back">Voltar</button>
+                <button id="btn-send-director" class="btn btn-send">Finalizar</button>
+            </div>
+        </div>
+
+        <!-- Telas do Professor -->
+        <div id="teacher-skills-screen" class="screen">
+            <h2 class="topic-header">Habilidades Essenciais do Professor</h2>
+            <h3 class="topic-header-sub">Selecione o que você faz bem:</h3>
+            <div class="topic-grid">
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Domínio do Conteúdo">
+                    <div>
+                        <h3>Domínio do Conteúdo</h3>
+                        <p>Você domina o assunto e sabe transmiti-lo de forma clara, despertando o interesse dos alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Adaptação e Flexibilidade">
+                    <div>
+                        <h3>Adaptação e Flexibilidade</h3>
+                        <p>Você ajusta a sua metodologia de ensino para se adequar a diferentes estilos de aprendizado na sala de aula.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Gestão de Sala de Aula">
+                    <div>
+                        <h3>Gestão de Sala de Aula</h3>
+                        <p>Você cria um ambiente de respeito e disciplina, onde todos os alunos se sentem seguros para aprender.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Empatia e Paciência">
+                    <div>
+                        <h3>Empatia e Paciência</h3>
+                        <p>Você entende as dificuldades dos alunos e os encoraja, ajudando-os a superar os obstáculos de forma gentil.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Criatividade em Aulas">
+                    <div>
+                        <h3>Criatividade em Aulas</h3>
+                        <p>Você utiliza recursos visuais, atividades práticas e jogos para tornar o aprendizado divertido e memorável.</p>
+                    </div>
+                </label>
+            </div>
+            <div class="btn-navigation">
+                <button id="btn-back-teacher-skills" class="btn btn-back">Voltar</button>
+                <button id="btn-next-teacher-skills" class="btn btn-next">Próximo</button>
+            </div>
+        </div>
+
+        <div id="teacher-difficulties-screen" class="screen">
+            <h2 class="topic-header">Maiores Dificuldades do Professor</h2>
+            <h3 class="topic-header-sub">Selecione onde você encontra desafios:</h3>
+            <div class="topic-grid">
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Heterogeneidade da Turma">
+                    <div>
+                        <h3>Heterogeneidade da Turma</h3>
+                        <p>Lidar com alunos de diferentes níveis de aprendizado, exigindo um planejamento que atenda a todos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Falta de Engajamento">
+                    <div>
+                        <h3>Falta de Engajamento</h3>
+                        <p>Encontrar maneiras de motivar alunos que se mostram desinteressados ou distraídos com outros estímulos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Questões Comportamentais">
+                    <div>
+                        <h3>Questões Comportamentais</h3>
+                        <p>Gerenciar conflitos e comportamentos inadequados que atrapalham o fluxo da aula e o foco dos alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Tempo de Preparo">
+                    <div>
+                        <h3>Tempo de Preparo</h3>
+                        <p>Conciliar a preparação de aulas, correção de trabalhos e outras atividades com a carga horária de sala de aula.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Recursos Limitados">
+                    <div>
+                        <h3>Recursos Limitados</h3>
+                        <p>Utilizar materiais e ferramentas de forma criativa quando o acesso a recursos modernos é escasso.</p>
+                    </div>
+                </label>
+            </div>
+            <div class="btn-navigation">
+                <button id="btn-back-teacher-difficulties" class="btn btn-back">Voltar</button>
+                <button id="btn-send-teacher" class="btn btn-send">Finalizar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Agradecimento -->
+        <div id="thank-you-screen" class="screen">
+            <h1>OBRIGADO POR PARTICIPAR!</h1>
+            <button id="btn-back-home" class="btn btn-next-name">Voltar para o Início</button>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all screens and buttons
+            const nameScreen = document.getElementById('name-screen');
+            const introScreen = document.getElementById('intro-screen');
+            const directorSkillsScreen = document.getElementById('director-skills-screen');
+            const directorDifficultiesScreen = document.getElementById('director-difficulties-screen');
+            const teacherSkillsScreen = document.getElementById('teacher-skills-screen');
+            const teacherDifficultiesScreen = document.getElementById('teacher-difficulties-screen');
+            const thankYouScreen = document.getElementById('thank-you-screen');
+            
+            const btnNextName = document.getElementById('btn-next-name');
+            const btnDirector = document.getElementById('btn-director');
+            const btnTeacher = document.getElementById('btn-teacher');
+
+            const btnBackDirectorSkills = document.getElementById('btn-back-director-skills');
+            const btnNextDirectorSkills = document.getElementById('btn-next-director-skills');
+            const btnBackDirectorDifficulties = document.getElementById('btn-back-director-difficulties');
+            const btnSendDirector = document.getElementById('btn-send-director');
+
+            const btnBackTeacherSkills = document.getElementById('btn-back-teacher-skills');
+            const btnNextTeacherSkills = document.getElementById('btn-next-teacher-skills');
+            const btnBackTeacherDifficulties = document.getElementById('btn-back-teacher-difficulties');
+            const btnSendTeacher = document.getElementById('btn-send-teacher');
+            const btnBackHome = document.getElementById('btn-back-home');
+
+            // Function to handle screen transitions
+            function showScreen(screen) {
+                const screens = document.querySelectorAll('.screen');
+                // Remove both 'active' and 'exiting' classes from all screens to prevent conflicts
+                screens.forEach(s => {
+                    s.classList.remove('active');
+                    s.classList.remove('exiting');
+                });
+                // Add the 'active' class to the target screen
+                screen.classList.add('active');
+            }
+
+            // Navigation event listeners
+            btnNextName.addEventListener('click', () => {
+                nameScreen.classList.add('exiting');
+                setTimeout(() => {
+                    showScreen(introScreen);
+                }, 800);
+            });
+
+            btnDirector.addEventListener('click', () => {
+                introScreen.classList.add('exiting');
+                setTimeout(() => {
+                    showScreen(directorSkillsScreen);
+                }, 800);
+            });
+
+            btnTeacher.addEventListener('click', () => {
+                introScreen.classList.add('exiting');
+                setTimeout(() => {
+                    showScreen(teacherSkillsScreen);
+                }, 800);
+            });
+
+            btnBackDirectorSkills.addEventListener('click', () => {
+                showScreen(introScreen);
+            });
+            
+            btnNextDirectorSkills.addEventListener('click', () => {
+                showScreen(directorDifficultiesScreen);
+            });
+
+            btnBackDirectorDifficulties.addEventListener('click', () => {
+                showScreen(directorSkillsScreen);
+            });
+
+            btnBackTeacherSkills.addEventListener('click', () => {
+                showScreen(introScreen);
+            });
+            
+            btnNextTeacherSkills.addEventListener('click', () => {
+                showScreen(teacherDifficultiesScreen);
+            });
+
+            btnBackTeacherDifficulties.addEventListener('click', () => {
+                showScreen(teacherSkillsScreen);
+            });
+
+            // "Finalizar" button listeners
+            btnSendDirector.addEventListener('click', () => {
+                showScreen(thankYouScreen);
+            });
+            btnSendTeacher.addEventListener('click', () => {
+                showScreen(thankYouScreen);
+            });
+            
+            // "Voltar para o Início" button listener
+            btnBackHome.addEventListener('click', () => {
+                showScreen(nameScreen);
+            });
+        });
+    </script>
+</body>
+</html>
