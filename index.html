@@ -9,12 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6a0572;
-            --secondary-color: #4b1a8c;
-            --accent-color: #f7b731;
-            --background-gradient: radial-gradient(circle at top left, #4b1a8c, #6a0572, #f7b731);
+            /* Cores atualizadas para tons semelhantes (dominante Azul) */
+            --primary-color: #007FFF; /* Azul Elétrico (H1, H2) */
+            --secondary-color: #4F86F7; /* NOVO: Azul Claro Vívido (H3, sub-cabeçalho, substitui o verde neon) */
+            --accent-color: #FFD700; /* Amarelo Vívido (Acento) */
+            --background-gradient: radial-gradient(circle at top left, #007FFF, #4F86F7, #FFD700); /* Gradiente ajustado para a nova tonalidade azul */
             --text-light: #f4f4f4;
-            --text-dark: #333;
+            --text-dark: #1A237E; /* NOVO: Azul Índigo Escuro para texto de parágrafo (substitui o cinza escuro) */
         }
 
         * {
@@ -43,6 +44,7 @@
         .slide-container {
             width: 100%;
             height: 100%;
+            /* Mantido um fundo branco semi-transparente para o conteúdo para garantir a legibilidade */
             background: rgba(255, 255, 255, 0.9);
             border-radius: 0;
             box-shadow: none;
@@ -97,7 +99,8 @@
         
         #name-screen input {
             padding: 10px 15px;
-            border: 2px solid var(--secondary-color);
+            /* Usando a cor de acento (Amarelo) para borda do input */
+            border: 2px solid var(--accent-color);
             border-radius: 8px;
             font-size: 1.1rem;
             text-align: center;
@@ -108,7 +111,7 @@
         }
 
         #name-screen input:focus {
-            border-color: var(--accent-color);
+            border-color: var(--primary-color);
         }
 
         .btn-next-name {
@@ -161,13 +164,15 @@
         }
 
         #btn-director {
+            /* Usa a nova cor secundária azulada */
             background-color: var(--secondary-color);
             color: var(--text-light);
         }
 
         #btn-teacher {
-            background-color: var(--accent-color);
-            color: var(--text-dark);
+            /* Mantém um tom de azul claro diferente para distinção */
+            background-color: #99D9FF;
+            color: var(--text-dark); /* Usando o novo dark blue tone */
         }
 
         /* --- Topic Screens --- */
@@ -180,6 +185,7 @@
         
         .topic-header-sub {
             font-size: 1.5rem;
+            /* Usa a nova cor secundária azulada */
             color: var(--secondary-color);
             margin-bottom: 20px;
             animation: slideInFromTop 0.8s forwards;
@@ -220,7 +226,7 @@
 
         .topic-card input[type="checkbox"]:checked + div {
             border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(106, 5, 114, 0.5);
+            box-shadow: 0 0 15px rgba(0, 127, 255, 0.5); /* Sombra mais vibrante (baseada no primary) */
             transform: scale(1.03);
         }
 
@@ -229,19 +235,30 @@
             transform: translateY(0);
         }
 
+        /* Ajustes no atraso de animação para as 10+ cartas */
         .screen.active .topic-card:nth-child(1) { transition-delay: 0.2s; }
-        .screen.active .topic-card:nth-child(2) { transition-delay: 0.4s; }
-        .screen.active .topic-card:nth-child(3) { transition-delay: 0.6s; }
-        .screen.active .topic-card:nth-child(4) { transition-delay: 0.8s; }
-        .screen.active .topic-card:nth-child(5) { transition-delay: 1.0s; }
+        .screen.active .topic-card:nth-child(2) { transition-delay: 0.3s; }
+        .screen.active .topic-card:nth-child(3) { transition-delay: 0.4s; }
+        .screen.active .topic-card:nth-child(4) { transition-delay: 0.5s; }
+        .screen.active .topic-card:nth-child(5) { transition-delay: 0.6s; }
+        .screen.active .topic-card:nth-child(6) { transition-delay: 0.7s; }
+        .screen.active .topic-card:nth-child(7) { transition-delay: 0.8s; }
+        .screen.active .topic-card:nth-child(8) { transition-delay: 0.9s; }
+        .screen.active .topic-card:nth-child(9) { transition-delay: 1.0s; }
+        .screen.active .topic-card:nth-child(10) { transition-delay: 1.1s; }
+        .screen.active .topic-card:nth-child(11) { transition-delay: 1.2s; }
+        .screen.active .topic-card:nth-child(12) { transition-delay: 1.3s; }
+
 
         .topic-card h3 {
+            /* Usa a nova cor secundária azulada */
             color: var(--secondary-color);
             font-size: 1.25rem;
             margin-bottom: 10px;
         }
 
         .topic-card p {
+            /* Usa o novo dark blue tone para maior coerência tonal */
             color: var(--text-dark);
             font-size: 0.95rem;
         }
@@ -280,8 +297,9 @@
         }
 
         .btn-send {
-            background-color: #28a745;
-            color: var(--text-light);
+            /* Usando a cor de acento (Amarelo) para o botão de Finalizar para dar destaque */
+            background-color: var(--accent-color);
+            color: var(--text-dark);
         }
 
         /* --- Animations --- */
@@ -356,6 +374,41 @@
                         <p>Você utiliza dados e métricas para garantir que o ensino atenda aos mais altos padrões de qualidade.</p>
                     </div>
                 </label>
+                 <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Gestão Financeira">
+                    <div>
+                        <h3>Gestão Financeira</h3>
+                        <p>Você administra orçamentos de forma responsável e transparente, otimizando os recursos da escola.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Inovação Curricular">
+                    <div>
+                        <h3>Inovação Curricular</h3>
+                        <p>Você integra novas metodologias e tecnologias para modernizar o plano de ensino.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Resolução de Conflitos">
+                    <div>
+                        <h3>Resolução de Conflitos</h3>
+                        <p>Você medeia tensões de maneira justa e imparcial entre equipe, pais e alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Relacionamento Comunitário">
+                    <div>
+                        <h3>Relacionamento Comunitário</h3>
+                        <p>Você constrói parcerias fortes com a comunidade local, ONGs e outras instituições.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-skills" value="Uso de Tecnologia Educacional">
+                    <div>
+                        <h3>Uso de Tecnologia Educacional</h3>
+                        <p>Você implementa e gerencia ferramentas digitais para melhorar a gestão escolar e o aprendizado.</p>
+                    </div>
+                </label>
             </div>
             <div class="btn-navigation">
                 <button id="btn-back-director-skills" class="btn btn-back">Voltar</button>
@@ -400,6 +453,41 @@
                     <div>
                         <h3>Pressão por Resultados</h3>
                         <p>Equilibrar a pressão por altas notas e desempenho com um ambiente de aprendizado saudável e acolhedor.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Resistência à Mudança">
+                    <div>
+                        <h3>Resistência à Mudança</h3>
+                        <p>Superar a relutância de alguns membros da equipe em adotar novas práticas pedagógicas ou tecnológicas.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Infraestrutura Escolar">
+                    <div>
+                        <h3>Infraestrutura Escolar</h3>
+                        <p>Garantir que as instalações da escola (prédios, equipamentos, tecnologia) atendam às necessidades modernas de ensino.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Baixo Desempenho Docente">
+                    <div>
+                        <h3>Baixo Desempenho Docente</h3>
+                        <p>Identificar e implementar planos de melhoria para professores que não estão atingindo os padrões de qualidade esperados.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Gestão de Crises">
+                    <div>
+                        <h3>Gestão de Crises</h3>
+                        <p>Lidar com emergências, como saúde, segurança ou eventos midiáticos, de forma rápida e eficiente.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="director-difficulties" value="Retenção de Talentos">
+                    <div>
+                        <h3>Retenção de Talentos</h3>
+                        <p>Manter professores e funcionários de alta qualidade motivados e na escola a longo prazo.</p>
                     </div>
                 </label>
             </div>
@@ -449,6 +537,41 @@
                         <p>Você utiliza recursos visuais, atividades práticas e jogos para tornar o aprendizado divertido e memorável.</p>
                     </div>
                 </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Avaliação Formativa">
+                    <div>
+                        <h3>Avaliação Formativa</h3>
+                        <p>Você usa métodos de avaliação contínua para ajustar o ensino em tempo real e guiar o desenvolvimento do aluno.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Uso de Tecnologias Digitais">
+                    <div>
+                        <h3>Uso de Tecnologias Digitais</h3>
+                        <p>Você integra ferramentas e plataformas digitais para enriquecer o conteúdo e interagir com os alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Inclusão e Diversidade">
+                    <div>
+                        <h3>Inclusão e Diversidade</h3>
+                        <p>Você adapta materiais e estratégias para garantir que alunos com necessidades especiais ou diferentes contextos culturais participem plenamente.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Metodologias Ativas">
+                    <div>
+                        <h3>Metodologias Ativas</h3>
+                        <p>Você promove o aprendizado prático e colaborativo, utilizando projetos, rotações e sala de aula invertida.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-skills" value="Feedback Construtivo">
+                    <div>
+                        <h3>Feedback Construtivo</h3>
+                        <p>Você oferece devolutivas claras e específicas que ajudam o aluno a identificar seus pontos de melhoria de forma positiva.</p>
+                    </div>
+                </label>
             </div>
             <div class="btn-navigation">
                 <button id="btn-back-teacher-skills" class="btn btn-back">Voltar</button>
@@ -495,6 +618,41 @@
                         <p>Utilizar materiais e ferramentas de forma criativa quando o acesso a recursos modernos é escasso.</p>
                     </div>
                 </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Sobrecarga de Trabalho">
+                    <div>
+                        <h3>Sobrecarga de Trabalho</h3>
+                        <p>Lidar com longas horas de trabalho, tarefas administrativas e a pressão de múltiplas responsabilidades.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Falta de Formação Continuada">
+                    <div>
+                        <h3>Falta de Formação Continuada</h3>
+                        <p>Manter-se atualizado sobre novas pesquisas e metodologias pedagógicas devido à escassez de oportunidades de treinamento.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Avaliação de Aprendizagem">
+                    <div>
+                        <h3>Avaliação de Aprendizagem</h3>
+                        <p>Desenvolver métodos justos e precisos para medir o real progresso e conhecimento dos alunos.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Relacionamento com a Direção">
+                    <div>
+                        <h3>Relacionamento com a Direção</h3>
+                        <p>Ter pouca voz nas decisões escolares ou sentir-se desalinhado com a liderança e as políticas da escola.</p>
+                    </div>
+                </label>
+                <label class="topic-card">
+                    <input type="checkbox" name="teacher-difficulties" value="Saúde Mental e Estresse">
+                    <div>
+                        <h3>Saúde Mental e Estresse</h3>
+                        <p>Gerenciar o estresse emocional e a saúde mental em uma profissão de alta demanda e responsabilidade.</p>
+                    </div>
+                </label>
             </div>
             <div class="btn-navigation">
                 <button id="btn-back-teacher-difficulties" class="btn btn-back">Voltar</button>
@@ -520,6 +678,8 @@
             const teacherSkillsScreen = document.getElementById('teacher-skills-screen');
             const teacherDifficultiesScreen = document.getElementById('teacher-difficulties-screen');
             const thankYouScreen = document.getElementById('thank-you-screen');
+
+            const nameInput = document.getElementById('name-input'); // Referência para o campo de nome
 
             const btnNextName = document.getElementById('btn-next-name');
             const btnDirector = document.getElementById('btn-director');
@@ -548,7 +708,7 @@
                 screen.classList.add('active');
             }
 
-            // Navigation event listeners
+            // Navigation event listeners (click handlers)
             btnNextName.addEventListener('click', () => {
                 nameScreen.classList.add('exiting');
                 setTimeout(() => {
@@ -605,6 +765,39 @@
             // "Voltar para o Início" button listener
             btnBackHome.addEventListener('click', () => {
                 showScreen(nameScreen);
+            });
+
+            // --- Listener para a tecla ENTER para avançar os slides ---
+            document.addEventListener('keydown', (event) => {
+                // Verifica se a tecla pressionada é 'Enter' (ou keyCode 13)
+                if (event.key === 'Enter') {
+                    // Previne o comportamento padrão do navegador (como submissão de formulário)
+                    event.preventDefault();
+
+                    const activeScreen = document.querySelector('.screen.active');
+                    if (!activeScreen) return;
+
+                    const activeScreenId = activeScreen.id;
+
+                    // Lógica para avançar a tela conforme o botão "Próximo" ou "Finalizar"
+                    if (activeScreenId === 'name-screen') {
+                        // Se estiver na tela de nome, aciona o botão "Próximo"
+                        btnNextName.click();
+                    } else if (activeScreenId === 'director-skills-screen') {
+                        // Se estiver na tela de habilidades do diretor, aciona o botão "Próximo"
+                        btnNextDirectorSkills.click();
+                    } else if (activeScreenId === 'teacher-skills-screen') {
+                        // Se estiver na tela de habilidades do professor, aciona o botão "Próximo"
+                        btnNextTeacherSkills.click();
+                    } else if (activeScreenId === 'director-difficulties-screen') {
+                         // Se estiver na tela de dificuldades do diretor, aciona o botão "Finalizar"
+                        btnSendDirector.click();
+                    } else if (activeScreenId === 'teacher-difficulties-screen') {
+                        // Se estiver na tela de dificuldades do professor, aciona o botão "Finalizar"
+                        btnSendTeacher.click();
+                    }
+                    // A tela 'intro-screen' é ignorada, pois requer uma escolha explícita (Diretor/Professor).
+                }
             });
         });
     </script>
