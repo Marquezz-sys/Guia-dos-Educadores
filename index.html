@@ -92,10 +92,20 @@
         #intro-screen h1 {
             font-size: 3rem;
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 5px; /* Reduzida a margem para caber a instrução */
             animation: fadeIn 1s forwards;
             font-weight: 700;
         }
+
+        /* Estilo para a instrução (COLOQUE O SITE EM TELA CHEIA) */
+        .fullscreen-instruction {
+            font-size: 1rem;
+            color: var(--text-dark); /* Usando o azul escuro para contraste */
+            margin-bottom: 25px; /* Adiciona margem após a instrução */
+            animation: fadeIn 1s forwards;
+            animation-delay: 0.1s;
+        }
+
         
         #name-screen input {
             padding: 10px 15px;
@@ -328,6 +338,7 @@
         <!-- Tela de Abertura -->
         <div id="intro-screen" class="screen">
             <h1>QUAL É SEU USUARIO?</h1>
+            <p class="fullscreen-instruction">(COLOQUE O SITE EM TELA CHEIA)</p> <!-- NOVA INSTRUÇÃO AQUI -->
             <div class="role-buttons">
                 <button id="btn-director" class="btn">Sou Diretor(a)</button>
                 <button id="btn-teacher" class="btn">Sou Professor(a)</button>
